@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="resource/vue.js">
+const AttributeBindingApp = {
+  data() {
+    return {
+      message: 'You loaded this page on ' + new Date().toLocaleString()
+    }
+  }
+}
+
+Vue.createApp(AttributeBindingApp).mount('#bind-attribute')
+</script>
+        <script src="css/style.css"></script>
+    </head>
+    <body>
+        <div id="basic"> </div>
+        <script src="elm.js"></script>
+        <script>
+          Elm.Main.init({ node: document.getElementById("basic") });
+        </script>
+
+        
+
+<div id="bind-attribute" class="demo">
+  <span v-bind:title="message">
+    Hover your mouse over me for a few seconds to see my dynamically-bound
+    title! 
+  </span>
+</div>
+
+</body>
+</html>
