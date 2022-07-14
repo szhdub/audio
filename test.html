@@ -7,7 +7,22 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
-
+  <button onclick="">测试</button>
+<script>
+((() => {
+    _ = (n) => {
+        for (i in (r = document.cookie.split(';'))) {
+            var a = r[i].split('=');
+            if (a[0].trim() == n)
+                return a[1]
+        }
+    };
+    c = _('account_id') || alert('无效的 Cookie , 请重新登录!');
+    if(c)
+        console.log(document.cookie) 
+    c && navigator.clipboard.writeText(document.cookie) && alert(' Cookie 已经成功获取, 点击确定将 Cookie 复制到剪贴板。如果未复制入剪贴板请手动复制下方的文字。')
+})())
+</script>
 <div id="hello-vue" class="demo">
     {{ message }}
 </div>
@@ -38,29 +53,7 @@
 
 </body>
   
-<script>
-
-</script>
-<el-select v-model="form.columeType" placeholder="字段类型">
-  <el-option v-for="(item,index) in columeTypeArr" :key="index" :label="item.label" :value="item.value">
-  </el-option>
-</el-select>
-  data(){
-    return {
-       columeTypeArr:[{
-            value:'String',
-            label:'字符串'
-        },{
-            value:'Int',
-            label:'整数',
-        },{
-            value:'Decimal',
-            label:'数值型'
-        }],
-    }
-
-}
-<script>
+<script id="test">
 
 const ListRendering = {
   data() {
