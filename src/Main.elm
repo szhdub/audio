@@ -28,6 +28,9 @@ type alias Model =
     , page : Page
     , navState : Navbar.State
     , modalVisibility : Modal.Visibility
+    , val : List String
+    , bol : Bool
+    , setChecked : Bool
     }
 
 type Page
@@ -55,7 +58,15 @@ init flags url key =
             Navbar.initialState NavMsg
 
         ( model, urlCmd ) =
-            urlUpdate url { navKey = key, navState = navState, page = Home, modalVisibility= Modal.hidden }
+            urlUpdate url { 
+                navKey = key
+                , navState = navState
+                , page = Home
+                , modalVisibility= Modal.hidden 
+                , val = []
+                , bol = False
+                , setChecked = False
+                }
     in
         ( model, Cmd.batch [ urlCmd, navCmd ] )
 
@@ -68,6 +79,8 @@ type Msg
     | NavMsg Navbar.State
     | CloseModal
     | ShowModal
+    | CheckMsg (String,Bool)
+    | TestCheck Bool
 
 
 subscriptions : Model -> Sub Msg
@@ -104,6 +117,19 @@ update msg model =
             ( { model | modalVisibility = Modal.shown }
             , Cmd.none
             )
+        CheckMsg (val,bol) ->
+            if bol then
+                ({model | 
+                val = val :: model.val
+                , bol = bol
+                }, Cmd.none)
+            else
+                (model, Cmd.none)
+        
+        TestCheck a ->
+            ({model |
+            setChecked = if a then False else True
+            }, Cmd.none)
 
 
 
@@ -143,15 +169,13 @@ view model =
             ]
         ]
     }
-
-
-
+    
 menu : Model -> Html Msg
 menu model =
     Navbar.config NavMsg
         |> Navbar.withAnimation
         |> Navbar.container
-        |> Navbar.brand [ href "#" ] [ text "Elm Bootstrap" ]
+        |> Navbar.brand [ href "#" ] [ text "Elm" ]
         |> Navbar.items
             [ Navbar.itemLink [ href "#getting-started" ] [ text "Getting started" ]
             , Navbar.itemLink [ href "#modules" ] [ text "Modules" ]
@@ -210,22 +234,26 @@ pageHome model =
             [ Fieldset.config
                 |> Fieldset.children
                     [ Checkbox.checkbox
-                        [ Checkbox.id "chk-invalid-1", Checkbox.inline ]
+                        [ Checkbox.id "chk-invalid-1", Checkbox.inline, Checkbox.onCheck (\v -> CheckMsg ("chk-invalid1",v)) ]
                         "物品1"
                     , Checkbox.checkbox
-                        [ Checkbox.id "chk-invalid-2", Checkbox.inline ]
+                        [ Checkbox.id "chk-invalid-2", Checkbox.inline, Checkbox.onCheck (\v -> CheckMsg ("chk-invalid2",v)) ]
                         "物品2"
                     , Checkbox.checkbox
-                        [ Checkbox.id "chk-invalid-3", Checkbox.inline, Checkbox.checked True ]
+                        [ Checkbox.id "chk-invalid-3", Checkbox.inline, Checkbox.checked model.setChecked, Checkbox.onCheck TestCheck]
                         "物品3"
                     ]
                 |> Fieldset.view
-
             ]
-
         ]
+    , div[]
+        (List.map (viewList model) model.val)  
+    
     ]
 
+viewList model val =
+    div []
+        [ text val , text (if model.bol then "True" else "False")]
 
 pageGettingStarted : Model -> List (Html Msg)
 pageGettingStarted model =

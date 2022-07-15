@@ -6017,7 +6017,7 @@ var $author$project$Main$init = F3(
 		var _v1 = A2(
 			$author$project$Main$urlUpdate,
 			url,
-			{modalVisibility: $rundis$elm_bootstrap$Bootstrap$Modal$hidden, navKey: key, navState: navState, page: $author$project$Main$Home});
+			{bol: false, modalVisibility: $rundis$elm_bootstrap$Bootstrap$Modal$hidden, navKey: key, navState: navState, page: $author$project$Main$Home, setChecked: false, val: _List_Nil});
 		var model = _v1.a;
 		var urlCmd = _v1.b;
 		return _Utils_Tuple2(
@@ -6696,11 +6696,32 @@ var $author$project$Main$update = F2(
 						model,
 						{modalVisibility: $rundis$elm_bootstrap$Bootstrap$Modal$hidden}),
 					$elm$core$Platform$Cmd$none);
-			default:
+			case 'ShowModal':
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{modalVisibility: $rundis$elm_bootstrap$Bootstrap$Modal$shown}),
+					$elm$core$Platform$Cmd$none);
+			case 'CheckMsg':
+				var _v2 = msg.a;
+				var val = _v2.a;
+				var bol = _v2.b;
+				return bol ? _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							bol: bol,
+							val: A2($elm$core$List$cons, val, model.val)
+						}),
+					$elm$core$Platform$Cmd$none) : _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+			default:
+				var a = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							setChecked: a ? false : true
+						}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
@@ -6972,6 +6993,12 @@ var $author$project$Main$pageGettingStarted = function (model) {
 					$elm$html$Html$text('Click me')
 				]))
 		]);
+};
+var $author$project$Main$CheckMsg = function (a) {
+	return {$: 'CheckMsg', a: a};
+};
+var $author$project$Main$TestCheck = function (a) {
+	return {$: 'TestCheck', a: a};
 };
 var $rundis$elm_bootstrap$Bootstrap$Card$Config = function (a) {
 	return {$: 'Config', a: a};
@@ -7478,6 +7505,12 @@ var $rundis$elm_bootstrap$Bootstrap$Button$linkButton = F2(
 				$rundis$elm_bootstrap$Bootstrap$Internal$Button$buttonAttributes(options)),
 			children);
 	});
+var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$OnChecked = function (a) {
+	return {$: 'OnChecked', a: a};
+};
+var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$onCheck = function (toMsg) {
+	return $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$OnChecked(toMsg);
+};
 var $rundis$elm_bootstrap$Bootstrap$Card$Internal$Coloring = function (a) {
 	return {$: 'Coloring', a: a};
 };
@@ -8458,6 +8491,18 @@ var $rundis$elm_bootstrap$Bootstrap$Form$Fieldset$view = function (_v0) {
 					},
 					rec.legend))));
 };
+var $author$project$Main$viewList = F2(
+	function (model, val) {
+		return A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text(val),
+					$elm$html$Html$text(
+					model.bol ? 'True' : 'False')
+				]));
+	});
 var $author$project$Main$pageHome = function (model) {
 	return _List_fromArray(
 		[
@@ -8586,7 +8631,12 @@ var $author$project$Main$pageHome = function (model) {
 										_List_fromArray(
 											[
 												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$id('chk-invalid-1'),
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$inline
+												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$inline,
+												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$onCheck(
+												function (v) {
+													return $author$project$Main$CheckMsg(
+														_Utils_Tuple2('chk-invalid1', v));
+												})
 											]),
 										'物品1'),
 										A2(
@@ -8594,7 +8644,12 @@ var $author$project$Main$pageHome = function (model) {
 										_List_fromArray(
 											[
 												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$id('chk-invalid-2'),
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$inline
+												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$inline,
+												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$onCheck(
+												function (v) {
+													return $author$project$Main$CheckMsg(
+														_Utils_Tuple2('chk-invalid2', v));
+												})
 											]),
 										'物品2'),
 										A2(
@@ -8603,13 +8658,21 @@ var $author$project$Main$pageHome = function (model) {
 											[
 												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$id('chk-invalid-3'),
 												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$inline,
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$checked(true)
+												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$checked(model.setChecked),
+												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$onCheck($author$project$Main$TestCheck)
 											]),
 										'物品3')
 									]),
 								$rundis$elm_bootstrap$Bootstrap$Form$Fieldset$config))
 						]))
-				]))
+				])),
+			A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			A2(
+				$elm$core$List$map,
+				$author$project$Main$viewList(model),
+				model.val))
 		]);
 };
 var $rundis$elm_bootstrap$Bootstrap$Internal$ListGroup$Item = function (a) {
@@ -9627,7 +9690,7 @@ var $author$project$Main$menu = function (model) {
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Elm Bootstrap')
+						$elm$html$Html$text('Elm')
 					]),
 				$rundis$elm_bootstrap$Bootstrap$Navbar$container(
 					$rundis$elm_bootstrap$Bootstrap$Navbar$withAnimation(
