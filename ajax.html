@@ -33,7 +33,7 @@
       
     <p>多个复选框：</p>
     <label v-for="n in 20">
-    <input type="checkbox" id="runoob" value="Runoob" v-model="checkedNames">
+    <input type="checkbox" :id="n" :value="n" v-model="checkedNames">
     <label for="runoob">Runoob {{n}}</label>
     
     </label>

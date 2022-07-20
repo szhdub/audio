@@ -229,31 +229,8 @@ pageHome model =
                 |> Card.view
             ]
         ]
-    , Grid.row[]
-        [ Grid.col[]
-            [ Fieldset.config
-                |> Fieldset.children
-                    [ Checkbox.checkbox
-                        [ Checkbox.id "chk-invalid-1", Checkbox.inline, Checkbox.onCheck (\v -> CheckMsg ("chk-invalid1",v)) ]
-                        "物品1"
-                    , Checkbox.checkbox
-                        [ Checkbox.id "chk-invalid-2", Checkbox.inline, Checkbox.onCheck (\v -> CheckMsg ("chk-invalid2",v)) ]
-                        "物品2"
-                    , Checkbox.checkbox
-                        [ Checkbox.id "chk-invalid-3", Checkbox.inline, Checkbox.checked model.setChecked, Checkbox.onCheck TestCheck]
-                        "物品3"
-                    ]
-                |> Fieldset.view
-            ]
-        ]
-    , div[]
-        (List.map (viewList model) model.val)  
     
     ]
-
-viewList model val =
-    div []
-        [ text val , text (if model.bol then "True" else "False")]
 
 pageGettingStarted : Model -> List (Html Msg)
 pageGettingStarted model =

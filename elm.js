@@ -6994,12 +6994,6 @@ var $author$project$Main$pageGettingStarted = function (model) {
 				]))
 		]);
 };
-var $author$project$Main$CheckMsg = function (a) {
-	return {$: 'CheckMsg', a: a};
-};
-var $author$project$Main$TestCheck = function (a) {
-	return {$: 'TestCheck', a: a};
-};
 var $rundis$elm_bootstrap$Bootstrap$Card$Config = function (a) {
 	return {$: 'Config', a: a};
 };
@@ -7183,255 +7177,6 @@ var $rundis$elm_bootstrap$Bootstrap$Card$block = F3(
 							]))
 				}));
 	});
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Checkbox = function (a) {
-	return {$: 'Checkbox', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$create = F2(
-	function (options, label_) {
-		return $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Checkbox(
-			{label: label_, options: options});
-	});
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Label = function (a) {
-	return {$: 'Label', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$label = F2(
-	function (attributes, children) {
-		return $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Label(
-			{attributes: attributes, children: children});
-	});
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$applyModifier = F2(
-	function (modifier, options) {
-		switch (modifier.$) {
-			case 'Id':
-				var val = modifier.a;
-				return _Utils_update(
-					options,
-					{
-						id: $elm$core$Maybe$Just(val)
-					});
-			case 'Value':
-				var val = modifier.a;
-				return _Utils_update(
-					options,
-					{state: val});
-			case 'Inline':
-				return _Utils_update(
-					options,
-					{inline: true});
-			case 'OnChecked':
-				var toMsg = modifier.a;
-				return _Utils_update(
-					options,
-					{
-						onChecked: $elm$core$Maybe$Just(toMsg)
-					});
-			case 'Custom':
-				return _Utils_update(
-					options,
-					{custom: true});
-			case 'Disabled':
-				var val = modifier.a;
-				return _Utils_update(
-					options,
-					{disabled: val});
-			case 'Validation':
-				var validation = modifier.a;
-				return _Utils_update(
-					options,
-					{
-						validation: $elm$core$Maybe$Just(validation)
-					});
-			default:
-				var attrs_ = modifier.a;
-				return _Utils_update(
-					options,
-					{
-						attributes: _Utils_ap(options.attributes, attrs_)
-					});
-		}
-	});
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Off = {$: 'Off'};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$defaultOptions = {attributes: _List_Nil, custom: false, disabled: false, id: $elm$core$Maybe$Nothing, inline: false, onChecked: $elm$core$Maybe$Nothing, state: $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Off, validation: $elm$core$Maybe$Nothing};
-var $elm$html$Html$Attributes$for = $elm$html$Html$Attributes$stringProperty('htmlFor');
-var $elm$html$Html$input = _VirtualDom_node('input');
-var $elm$html$Html$label = _VirtualDom_node('label');
-var $elm$core$Basics$not = _Basics_not;
-var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
-var $elm$json$Json$Decode$at = F2(
-	function (fields, decoder) {
-		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
-	});
-var $elm$json$Json$Decode$bool = _Json_decodeBool;
-var $elm$html$Html$Events$targetChecked = A2(
-	$elm$json$Json$Decode$at,
-	_List_fromArray(
-		['target', 'checked']),
-	$elm$json$Json$Decode$bool);
-var $elm$html$Html$Events$onCheck = function (tagger) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'change',
-		A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetChecked));
-};
-var $elm$virtual_dom$VirtualDom$attribute = F2(
-	function (key, value) {
-		return A2(
-			_VirtualDom_attribute,
-			_VirtualDom_noOnOrFormAction(key),
-			_VirtualDom_noJavaScriptOrHtmlUri(value));
-	});
-var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
-var $elm$html$Html$Attributes$checked = $elm$html$Html$Attributes$boolProperty('checked');
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$stateAttribute = function (state) {
-	switch (state.$) {
-		case 'On':
-			return $elm$html$Html$Attributes$checked(true);
-		case 'Off':
-			return $elm$html$Html$Attributes$checked(false);
-		default:
-			return A2($elm$html$Html$Attributes$attribute, 'indeterminate', 'true');
-	}
-};
-var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
-var $rundis$elm_bootstrap$Bootstrap$Form$FormInternal$validationToString = function (validation) {
-	if (validation.$ === 'Success') {
-		return 'is-valid';
-	} else {
-		return 'is-invalid';
-	}
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$toAttributes = function (options) {
-	return _Utils_ap(
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$classList(
-				_List_fromArray(
-					[
-						_Utils_Tuple2('form-check-input', !options.custom),
-						_Utils_Tuple2('custom-control-input', options.custom)
-					])),
-				$elm$html$Html$Attributes$type_('checkbox'),
-				$elm$html$Html$Attributes$disabled(options.disabled),
-				$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$stateAttribute(options.state)
-			]),
-		_Utils_ap(
-			A2(
-				$elm$core$List$filterMap,
-				$elm$core$Basics$identity,
-				_List_fromArray(
-					[
-						A2($elm$core$Maybe$map, $elm$html$Html$Events$onCheck, options.onChecked),
-						A2($elm$core$Maybe$map, $elm$html$Html$Attributes$id, options.id)
-					])),
-			_Utils_ap(
-				function () {
-					var _v0 = options.validation;
-					if (_v0.$ === 'Just') {
-						var v = _v0.a;
-						return _List_fromArray(
-							[
-								$elm$html$Html$Attributes$class(
-								$rundis$elm_bootstrap$Bootstrap$Form$FormInternal$validationToString(v))
-							]);
-					} else {
-						return _List_Nil;
-					}
-				}(),
-				options.attributes)));
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$view = function (_v0) {
-	var chk = _v0.a;
-	var opts = A3($elm$core$List$foldl, $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$applyModifier, $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$defaultOptions, chk.options);
-	var _v1 = chk.label;
-	var label_ = _v1.a;
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$classList(
-				_List_fromArray(
-					[
-						_Utils_Tuple2('form-check', !opts.custom),
-						_Utils_Tuple2('form-check-inline', (!opts.custom) && opts.inline),
-						_Utils_Tuple2('custom-control', opts.custom),
-						_Utils_Tuple2('custom-checkbox', opts.custom),
-						_Utils_Tuple2('custom-control-inline', opts.inline && opts.custom)
-					]))
-			]),
-		_List_fromArray(
-			[
-				A2(
-				$elm$html$Html$input,
-				$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$toAttributes(opts),
-				_List_Nil),
-				A2(
-				$elm$html$Html$label,
-				_Utils_ap(
-					label_.attributes,
-					_Utils_ap(
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$classList(
-								_List_fromArray(
-									[
-										_Utils_Tuple2('form-check-label', !opts.custom),
-										_Utils_Tuple2('custom-control-label', opts.custom)
-									]))
-							]),
-						function () {
-							var _v2 = opts.id;
-							if (_v2.$ === 'Just') {
-								var v = _v2.a;
-								return _List_fromArray(
-									[
-										$elm$html$Html$Attributes$for(v)
-									]);
-							} else {
-								return _List_Nil;
-							}
-						}())),
-				label_.children)
-			]));
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$checkbox = F2(
-	function (options, labelText) {
-		return $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$view(
-			A2(
-				$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$create,
-				options,
-				A2(
-					$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$label,
-					_List_Nil,
-					_List_fromArray(
-						[
-							$elm$html$Html$text(labelText)
-						]))));
-	});
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$On = {$: 'On'};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Value = function (a) {
-	return {$: 'Value', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$checked = function (isCheck) {
-	return $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Value(
-		isCheck ? $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$On : $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Off);
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Fieldset$Config = function (a) {
-	return {$: 'Config', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Fieldset$mapConfig = F2(
-	function (mapper, _v0) {
-		var configRec = _v0.a;
-		return $rundis$elm_bootstrap$Bootstrap$Form$Fieldset$Config(
-			mapper(configRec));
-	});
-var $rundis$elm_bootstrap$Bootstrap$Form$Fieldset$children = function (children_) {
-	return $rundis$elm_bootstrap$Bootstrap$Form$Fieldset$mapConfig(
-		function (conf) {
-			return _Utils_update(
-				conf,
-				{children: children_});
-		});
-};
 var $rundis$elm_bootstrap$Bootstrap$Grid$Column = function (a) {
 	return {$: 'Column', a: a};
 };
@@ -7444,12 +7189,6 @@ var $rundis$elm_bootstrap$Bootstrap$Card$config = function (options) {
 	return $rundis$elm_bootstrap$Bootstrap$Card$Config(
 		{blocks: _List_Nil, footer: $elm$core$Maybe$Nothing, header: $elm$core$Maybe$Nothing, imgBottom: $elm$core$Maybe$Nothing, imgTop: $elm$core$Maybe$Nothing, options: options});
 };
-var $rundis$elm_bootstrap$Bootstrap$Form$Fieldset$config = $rundis$elm_bootstrap$Bootstrap$Form$Fieldset$Config(
-	{
-		children: _List_Nil,
-		legend: $elm$core$Maybe$Nothing,
-		options: {attributes: _List_Nil, disabled: false, isGroup: false}
-	});
 var $rundis$elm_bootstrap$Bootstrap$Card$Internal$BlockItem = function (a) {
 	return {$: 'BlockItem', a: a};
 };
@@ -7486,15 +7225,15 @@ var $elm$html$Html$Attributes$href = function (url) {
 		'href',
 		_VirtualDom_noJavaScriptUri(url));
 };
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Id = function (a) {
-	return {$: 'Id', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$id = function (theId) {
-	return $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Id(theId);
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Inline = {$: 'Inline'};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$inline = $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$Inline;
 var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$virtual_dom$VirtualDom$attribute = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_attribute,
+			_VirtualDom_noOnOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlUri(value));
+	});
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $rundis$elm_bootstrap$Bootstrap$Button$linkButton = F2(
 	function (options, children) {
 		return A2(
@@ -7505,12 +7244,6 @@ var $rundis$elm_bootstrap$Bootstrap$Button$linkButton = F2(
 				$rundis$elm_bootstrap$Bootstrap$Internal$Button$buttonAttributes(options)),
 			children);
 	});
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$OnChecked = function (a) {
-	return {$: 'OnChecked', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$onCheck = function (toMsg) {
-	return $rundis$elm_bootstrap$Bootstrap$Form$Checkbox$OnChecked(toMsg);
-};
 var $rundis$elm_bootstrap$Bootstrap$Card$Internal$Coloring = function (a) {
 	return {$: 'Coloring', a: a};
 };
@@ -8460,49 +8193,6 @@ var $rundis$elm_bootstrap$Bootstrap$Card$view = function (_v0) {
 							conf.imgBottom)
 						])))));
 };
-var $elm$html$Html$fieldset = _VirtualDom_node('fieldset');
-var $rundis$elm_bootstrap$Bootstrap$Form$Fieldset$view = function (_v0) {
-	var rec = _v0.a;
-	var options = rec.options;
-	return A2(
-		$elm$html$Html$fieldset,
-		_Utils_ap(
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$classList(
-					_List_fromArray(
-						[
-							_Utils_Tuple2('form-group', options.isGroup)
-						])),
-					$elm$html$Html$Attributes$disabled(options.disabled)
-				]),
-			options.attributes),
-		function (xs) {
-			return A2($elm$core$List$append, xs, rec.children);
-		}(
-			A2(
-				$elm$core$Maybe$withDefault,
-				_List_Nil,
-				A2(
-					$elm$core$Maybe$map,
-					function (e) {
-						return _List_fromArray(
-							[e]);
-					},
-					rec.legend))));
-};
-var $author$project$Main$viewList = F2(
-	function (model, val) {
-		return A2(
-			$elm$html$Html$div,
-			_List_Nil,
-			_List_fromArray(
-				[
-					$elm$html$Html$text(val),
-					$elm$html$Html$text(
-					model.bol ? 'True' : 'False')
-				]));
-	});
 var $author$project$Main$pageHome = function (model) {
 	return _List_fromArray(
 		[
@@ -8610,69 +8300,7 @@ var $author$project$Main$pageHome = function (model) {
 										_List_fromArray(
 											[$rundis$elm_bootstrap$Bootstrap$Card$outlineDanger])))))
 						]))
-				])),
-			A2(
-			$rundis$elm_bootstrap$Bootstrap$Grid$row,
-			_List_Nil,
-			_List_fromArray(
-				[
-					A2(
-					$rundis$elm_bootstrap$Bootstrap$Grid$col,
-					_List_Nil,
-					_List_fromArray(
-						[
-							$rundis$elm_bootstrap$Bootstrap$Form$Fieldset$view(
-							A2(
-								$rundis$elm_bootstrap$Bootstrap$Form$Fieldset$children,
-								_List_fromArray(
-									[
-										A2(
-										$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$checkbox,
-										_List_fromArray(
-											[
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$id('chk-invalid-1'),
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$inline,
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$onCheck(
-												function (v) {
-													return $author$project$Main$CheckMsg(
-														_Utils_Tuple2('chk-invalid1', v));
-												})
-											]),
-										'物品1'),
-										A2(
-										$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$checkbox,
-										_List_fromArray(
-											[
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$id('chk-invalid-2'),
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$inline,
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$onCheck(
-												function (v) {
-													return $author$project$Main$CheckMsg(
-														_Utils_Tuple2('chk-invalid2', v));
-												})
-											]),
-										'物品2'),
-										A2(
-										$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$checkbox,
-										_List_fromArray(
-											[
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$id('chk-invalid-3'),
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$inline,
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$checked(model.setChecked),
-												$rundis$elm_bootstrap$Bootstrap$Form$Checkbox$onCheck($author$project$Main$TestCheck)
-											]),
-										'物品3')
-									]),
-								$rundis$elm_bootstrap$Bootstrap$Form$Fieldset$config))
-						]))
-				])),
-			A2(
-			$elm$html$Html$div,
-			_List_Nil,
-			A2(
-				$elm$core$List$map,
-				$author$project$Main$viewList(model),
-				model.val))
+				]))
 		]);
 };
 var $rundis$elm_bootstrap$Bootstrap$Internal$ListGroup$Item = function (a) {
@@ -8944,6 +8572,7 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$maybeBrand = function (brand_) {
 		return _List_Nil;
 	}
 };
+var $elm$core$Basics$not = _Basics_not;
 var $rundis$elm_bootstrap$Bootstrap$Navbar$sizeToComparable = function (size) {
 	switch (size.$) {
 		case 'XS':
@@ -9491,6 +9120,10 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$renderNav = F3(
 	});
 var $elm$html$Html$span = _VirtualDom_node('span');
 var $elm$json$Json$Decode$andThen = _Json_andThen;
+var $elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
+	});
 var $elm$json$Json$Decode$decodeValue = _Json_run;
 var $elm$json$Json$Decode$fail = _Json_fail;
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
@@ -9585,6 +9218,7 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$toggleHandler = F2(
 				},
 				$rundis$elm_bootstrap$Bootstrap$Navbar$heightDecoder));
 	});
+var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
 var $rundis$elm_bootstrap$Bootstrap$Navbar$view = F2(
 	function (state, conf) {
 		var configRec = conf.a;
