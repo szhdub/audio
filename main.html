@@ -10,26 +10,30 @@
 
 <body>
     <div id="event-with-method">
-      <button-counter></button-counter>
+      姓：<input type="text" v-model="firstName" ></input><br/>
+      名：<input type="text" v-model="lastName" ></input><br/>
+      全名:<sapn>{{ fullName }} {{firstName}}</sapn>
+      
     </div>
 
 </body>
 
-<script>
-const app = Vue.createApp({})
-
-app.component('button-counter', {
-  data(){
-    return {
-      count: 0
+<script type="text/javascript">
+const app = Vue.createApp({
+data:{
+      firstName: '张',
+      lastName:'三',
+      
+  },
+  methods: {
+    fullName(){
+      return '测试'
     }
   },
-  template:`
-    <button @click="count++">
-      clicked me {{ count }} times.
-    </button>
-  `
+
 })
+
+
 const vm = app.mount('#event-with-method')  
 console.log(vm)      
 </script>
