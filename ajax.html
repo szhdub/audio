@@ -2,66 +2,24 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>ajax测试</title>
+<title>ajax</title>
 <script src="https://unpkg.com/vue@next"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
 <div id="app">
-    <h1>Bitcoin Price Index</h1>
+   
 
-    <section v-if="errored">
-        <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
-    </section>
-
-    <section v-else>
-        <div v-if="loading">Loading...</div>
-    <div
-      v-for="currency in infos"
-      class="currency"
-    >
-      {{ currency.title }}:
-      <span class="lighten">
-        <span v-html="currency.symbol"></span>{{ currency.id }}
-      </span>
-    </div>
-      
 </div>
 
 <div id="chk">
       
-    <p>多个复选框：</p>
-    <label v-for="n in 20">
-    <input type="checkbox" :id="n" :value="n" v-model="checkedNames">
-    <label for="runoob">Runoob {{n}}</label>
-    
-    </label>
-    
-    <input type="checkbox" id="google" value="Google" v-model="checkedNames">
-    <label for="google">Google</label>
-    <input type="checkbox" id="taobao" value="Taobao" v-model="checkedNames">
-    <label for="taobao">taobao</label>
-    <br>
-    <span>选择的值为: {{ checkedNames }}</span>
   </div>
 
 </body>
 
-<script>
-    const chk = {
-      data() {
-        return {
-          checked : false,
-          checkedNames: []
-        }
-      }
-    }
-     
-    Vue.createApp(chk).mount('#chk')
-    </script>
-    
-    <script> 
+  <script> 
     const app = {
       data() {
         return {
@@ -89,6 +47,7 @@
       }
     
     }
+    
     
     Vue.createApp(app).mount('#app')
     </script>

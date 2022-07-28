@@ -33,6 +33,8 @@ type alias Model =
     , setChecked : Bool
     }
 
+
+
 type Page
     = Home
     | GettingStarted
@@ -51,26 +53,25 @@ main =
         , onUrlChange = UrlChange
         }
 
+
 init : Flags -> Url -> Navigation.Key -> ( Model, Cmd Msg )
-init flags url key =
+init _ url key =
     let
         ( navState, navCmd ) =
             Navbar.initialState NavMsg
 
         ( model, urlCmd ) =
             urlUpdate url { 
-                navKey = key
-                , navState = navState
-                , page = Home
-                , modalVisibility= Modal.hidden 
-                , val = []
-                , bol = False
-                , setChecked = False
+                    navKey = key
+                    , navState = navState
+                    , page = Home
+                    , modalVisibility= Modal.hidden 
+                    , val = []
+                    , bol = False
+                    , setChecked = False
                 }
     in
         ( model, Cmd.batch [ urlCmd, navCmd ] )
-
-
 
 
 type Msg
@@ -132,7 +133,6 @@ update msg model =
             }, Cmd.none)
 
 
-
 urlUpdate : Url -> Model -> ( Model, Cmd Msg )
 urlUpdate url model =
     case decode url of
@@ -169,7 +169,7 @@ view model =
             ]
         ]
     }
-    
+
 menu : Model -> Html Msg
 menu model =
     Navbar.config NavMsg
@@ -201,7 +201,7 @@ mainContent model =
 
 
 pageHome : Model -> List (Html Msg)
-pageHome model =
+pageHome _ =
     [ h1 [] [ text "Home" ]
     , Grid.row []
         [ Grid.col []
@@ -229,7 +229,6 @@ pageHome model =
                 |> Card.view
             ]
         ]
-    
     ]
 
 pageGettingStarted : Model -> List (Html Msg)
@@ -237,7 +236,7 @@ pageGettingStarted model =
     [ h2 [] [ text "Getting started" ]
     , Button.button
         [ Button.success
-        , Button.large
+        , Button.large 
         , Button.block
         , Button.attrs [ onClick ShowModal ]
         ]
@@ -255,11 +254,10 @@ pageModules model =
         ]
     ]
 
-
 pageNotFound : List (Html Msg)
 pageNotFound =
     [ h1 [] [ text "Not found" ]
-    , text "SOrry couldn't find that page"
+    , text "Sorry couldn't find that page"
     ]
 
 
