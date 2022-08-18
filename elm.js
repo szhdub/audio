@@ -6010,16 +6010,16 @@ var $author$project$Main$urlUpdate = F2(
 		}
 	});
 var $author$project$Main$init = F3(
-	function (flags, url, key) {
-		var _v0 = $rundis$elm_bootstrap$Bootstrap$Navbar$initialState($author$project$Main$NavMsg);
-		var navState = _v0.a;
-		var navCmd = _v0.b;
-		var _v1 = A2(
+	function (_v0, url, key) {
+		var _v1 = $rundis$elm_bootstrap$Bootstrap$Navbar$initialState($author$project$Main$NavMsg);
+		var navState = _v1.a;
+		var navCmd = _v1.b;
+		var _v2 = A2(
 			$author$project$Main$urlUpdate,
 			url,
 			{bol: false, modalVisibility: $rundis$elm_bootstrap$Bootstrap$Modal$hidden, navKey: key, navState: navState, page: $author$project$Main$Home, setChecked: false, val: _List_Nil});
-		var model = _v1.a;
-		var urlCmd = _v1.b;
+		var model = _v2.a;
+		var urlCmd = _v2.b;
 		return _Utils_Tuple2(
 			model,
 			$elm$core$Platform$Cmd$batch(
@@ -8193,7 +8193,7 @@ var $rundis$elm_bootstrap$Bootstrap$Card$view = function (_v0) {
 							conf.imgBottom)
 						])))));
 };
-var $author$project$Main$pageHome = function (model) {
+var $author$project$Main$pageHome = function (_v0) {
 	return _List_fromArray(
 		[
 			A2(
@@ -8443,7 +8443,7 @@ var $author$project$Main$pageNotFound = _List_fromArray(
 			[
 				$elm$html$Html$text('Not found')
 			])),
-		$elm$html$Html$text('SOrry couldn\'t find that page')
+		$elm$html$Html$text('Sorry couldn\'t find that page')
 	]);
 var $author$project$Main$mainContent = function (model) {
 	return A2(
