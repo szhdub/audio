@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<!--
+  check after:
+  https://stackoverflow.com/questions/73891141/should-i-convert-32-bit-float-audio-samples-into-a-16-bit-pcm-data-wav-file-in-m
+-->
+
+<html>
+  <head>
+    <title>Language playground</title>
+<style>
+.my_center {
+  margin: auto;
+  width: 60%;
+  height: 300px;
+  padding: 10px;
+  text-align: center; 
+
+}
+.recorder {
+  padding: 10px;
+  text-align: center;
+  text-align: center; 
+
+
+}
+
+.target_phrase {
+  padding: 10px;
+  text-align: center; 
+
+}
+.infered {
+  padding: 10px;
+  text-align: center; 
+}
+
+body {
+  color: #fce6ca;
+  background-color: #191a24;
+}
+</style>
+
+    <meta charset="UTF-8">
+  </head>
+  <body text-color="#fce6ca">
+
+   <div class="my_center">
+
+
+     <div celspan=1>
+<label for="cars">target language</label>
+
+<select name="lang" id="language">
+  <option value="es">Spanish</option>
+  <option value="ru">Russian</option>
+  <!--
+  <option value="en">English</option>
+  <option value="jp">Japanesse</option>
+  <option value="kr">Korean</option>
+  -->
+</select>
+</div>
+
+    <div class="target_phrase">
+      <div>
+    <button id="prev_track">prev track</button>
+    <button id="next_track">next track</button>
+    </div>
+
+      <div celspan=1>
+    <p id="target_text">target_text</p>
+<audio id="audio" controls="controls">
+  <source id="audioSource" src=""></source>
+  Your browser does not support the audio format.
+</audio>
+</div>
+
+     </div>
+
+    <div class="recorder">
+    <button id="record">Record</button>
+    <button id="play" disabled>Play</button>
+    <button id="save" disabled>Save</button>
+    </div>
+
+
+    <div class="infered" >
+      ai infered:
+    <div id="saved-audio-messages" >
+      - placeholder - 
+    </div>
+     </div>
+
+    </div>
+
+    <script>
+
+      const tracks = {"ru": [
+{'text': 'Я проснулся от лая соседской собачки', 'mp3': 'test_0.mp3'}, 
+{'text': ' Гнусная тварь, она всегда менябудит', 'mp3': 'test_1.mp3'}, 
+{'text': ' Как я ее ненавижу! Почему я должен пробуждаться именно отзвуков, которые издает это гадкое отродье? Надо пойти прогуляться,успокоиться и как-то отвлечься от острого желания поджечь соседский дом', 'mp3': 'test_2.mp3'}, 
+{'text': 'Какая собачка, такие и хозяева', 'mp3': 'test_3.mp3'}, 
+{'text': ' Вечно в мою жизнь вползают какие-то гадыи стараются меня достать', 'mp3': 'test_4.mp3'}, 
+{'text': ' Нервно одеваюсь', 'mp3': 'test_5.mp3'}, 
+{'text': ' Опять куда-то запропастилисьмои тапки', 'mp3': 'test_6.mp3'}, 
+{'text': ' Где вы, изворотливые ублюдки? Найду – выброшу!На улице туман, сырость', 'mp3': 'test_7.mp3'}, 
+{'text': ' Я шел по скользкой тропинке через угрюмыйлес', 'mp3': 'test_8.mp3'}, 
+{'text': ' Почти все листья уже опали, обнажив серые стволы полумертвыхдеревьев', 'mp3': 'test_9.mp3'}, 
+{'text': ' Почему я живу посреди этого мрачного болота? Достаю сигарету', 'mp3': 'test_10.mp3'}, 
+{'text': 'Вроде не хочется курить, но старая привычка говорит, что надо', 'mp3': 'test_11.mp3'}, 
+{'text': ' Надо? Скаких это пор сигарета стала для меня как обязанность? Да, довольнопротивно курить утром, на голодный желудок', 'mp3': 'test_12.mp3'}, 
+{'text': ' Это раньше, в веселойкомпании, сигарета доставляла удовольствие, была неким символом моды,свободы, стильности', 'mp3': 'test_13.mp3'}, 
+{'text': ' Но праздники кончаются, и наступают дождливыесерые будни с лужами вязких проблем', 'mp3': 'test_14.mp3'}, 
+{'text': ' И каждую проблему по несколькораз заедаешь сигаретой, словно говоришь себе: вот сейчас покурю,отдышусь, и снова окунусь в эту опостылевшую рутину', 'mp3': 'test_15.mp3'}, 
+{'text': 'Дым от сигареты попал мне в глаза, и я на минуту закрыл их руками,как обиженный ребенок', 'mp3': 'test_16.mp3'}, 
+{'text': ' Как все надоело', 'mp3': 'test_17.mp3'}, 
+{'text': ' И тут, словно в подтверждениемоих мыслей, ветка березы, коварно изогнувшись, больно ударила меня полицу', 'mp3': 'test_18.mp3'}, 
+{'text': ' Сволочь! Я в бешенстве сломал ее и швырнул в сторону', 'mp3': 'test_19.mp3'}, 
+{'text': ' Она повислана дереве и начала раскачиваться и подпрыгивать, как паяц, будтодемонстрируя мне все мое бессилие что-либо изменить в этом мире', 'mp3': 'test_20.mp3'}, 
+{'text': ' Яуныло побрел дальше', 'mp3': 'test_21.mp3'} 
+      ],
+"es": [
+{'text': '¿Cuál es tu (restaurante/ café) favorito aquí?', 'mp3': 'es/phrase_1.mp3'}, 
+{'text': '¿Qué comida local debo probar?', 'mp3': 'es/phrase_2.mp3'}, 
+{'text': '¿Cuáles son algunos lugares interesantes para visitar?', 'mp3': 'es/phrase_3.mp3'}, 
+{'text': '¿Cuál es el mejor lugar para (ver el atardecer)?', 'mp3': 'es/phrase_4.mp3'}, 
+{'text': '¿Qué debería experimentar al visitar (Barcelona)?', 'mp3': 'es/phrase_5.mp3'}, 
+{'text': '¿Cómo consigo X más barato?', 'mp3': 'es/phrase_6.mp3'}, 
+{'text': '¿De qué debo tener cuidado?', 'mp3': 'es/phrase_7.mp3'}, 
+{'text': '¿Vale la pena visitar (el museo)?', 'mp3': 'es/phrase_8.mp3'}, 
+{'text': '¿Qué consejo me puedes dar tu que vives aquí?', 'mp3': 'es/phrase_9.mp3'}, 
+{'text': 'comida ', 'mp3': 'es/phrase_10.mp3'}, 
+{'text': '¡Tengo hambre!', 'mp3': 'es/phrase_11.mp3'}, 
+{'text': '¡(La sopa) estaba deliciosa!', 'mp3': 'es/phrase_12.mp3'}, 
+{'text': 'Quisiera pedir (el pollo asado)', 'mp3': 'es/phrase_13.mp3'}, 
+{'text': 'Soy vegetariano(a)/ vegano(a) / sin gluten', 'mp3': 'es/phrase_14.mp3'}, 
+{'text': 'No como (chile)', 'mp3': 'es/phrase_15.mp3'}, 
+{'text': '¿Me das la receta?', 'mp3': 'es/phrase_16.mp3'}, 
+{'text': '¿Cuál es menú del día?', 'mp3': 'es/phrase_17.mp3'}, 
+{'text': '¿Cuáles son los ingredientes?', 'mp3': 'es/phrase_18.mp3'}, 
+      ]};
+
+const recordAudio = () =>
+    new Promise(async resolve => {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true
+        });
+        const mediaRecorder = new MediaRecorder(stream);
+        let audioChunks = [];
+
+        mediaRecorder.addEventListener('dataavailable', event => {
+            console.log("got data");
+            audioChunks.push(event.data);
+        });
+
+        const start = () => {
+            audioChunks = [];
+            mediaRecorder.start();
+        };
+
+        const stop = () =>
+            new Promise(resolve => {
+                mediaRecorder.addEventListener('stop', () => {
+                    const audioBlob = new Blob(audioChunks, {
+                        type: 'audio/mpeg'
+                    });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    const audio = new Audio(audioUrl);
+                    const play = () => audio.play();
+                    resolve({
+                        audioChunks,
+                        audioBlob,
+                        audioUrl,
+                        play
+                    });
+                });
+
+                mediaRecorder.stop();
+            });
+
+        const grab = () =>
+            new Promise(resolve => {
+                //const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
+                // const audioUrl = URL.createObjectURL(audioBlob);
+                //  const audio = new Audio(audioUrl);
+                //  const play = () => audio.play();
+                const audioBlob = mediaRecorder.requestData();
+                console.log("requestData");
+                resolve({ //audioChunks, audioBlob, audioUrl, play 
+                    audioBlob
+                });
+
+            });
+
+
+        resolve({
+            start,
+            stop,
+            grab
+        });
+    });
+
+const sleep = time => new Promise(resolve => setTimeout(resolve, time));
+
+const recordButton = document.querySelector('#record');
+const playButton = document.querySelector('#play');
+const saveButton = document.querySelector('#save');
+const savedAudioMessagesContainer = document.querySelector('#saved-audio-messages');
+const prev_track = document.querySelector('#prev_track');
+const target_text = document.querySelector('#target_text');
+const next_track = document.querySelector('#next_track');
+const language = document.querySelector('#language')
+
+//target_text 
+let recorder;
+let audio;
+let current_track = 0;
+
+async function myFunction() {
+    console.log("timer tick");
+}
+
+var listening = false;
+
+function set_track() {
+  var lang = language.value;
+
+   target_text.textContent=tracks[lang][current_track]['text'];
+//  new Audio('./'+tracks[current_track]['mp3']+'').play()
+//  var elm = e.target;
+  var audio = document.getElementById('audio');
+
+  var source = document.getElementById('audioSource');
+  source.src = './'+tracks[lang][current_track]['mp3'];
+
+  audio.load(); //call this to just preload the audio without playing
+}
+
+set_track();
+
+language.addEventListener('change', async () => {
+ current_track = 0;
+  set_track();
+})
+ 
+recordButton.addEventListener('click', async () => {
+    if (listening == false) {
+        document.getElementById("record").innerHTML = "Stop";
+        playButton.setAttribute('disabled', true);
+        saveButton.setAttribute('disabled', true);
+        if (!recorder) {
+            recorder = await recordAudio();
+        }
+
+
+        recorder.start();
+
+        listening = true;
+
+    } else {
+        document.getElementById("record").innerHTML = "Record";
+
+        listening = false;
+        playButton.removeAttribute('disabled');
+        saveButton.removeAttribute('disabled');
+        audio = await recorder.stop();
+
+        const reader = new FileReader();
+
+        reader.readAsDataURL(audio.audioBlob);
+        reader.onload = () => {
+            const base64AudioMessage = reader.result.split(',')[1];
+
+            var url = "https://fourth-org-revenues-chevy.trycloudflare.com/";
+            if (window.location.host.startsWith("127.0.0.1")) {
+                url = "http://127.0.0.1:8080/";
+            }
+            //fourth-org-revenues-chevy.trycloudflare.com
+            fetch(url + '/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: base64AudioMessage,
+                        language: language.value,
+                        quality: "base"
+                    }),
+                })
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res);
+                    var p = document.createElement('p');
+                    p.textContent = "> " + res.result;
+                    var d = document.getElementById('saved-audio-messages');
+                    d.innerHTML = '';
+                    d.appendChild(p)
+                });
+        };
+
+
+    }
+});
+
+playButton.addEventListener('click', () => {
+    audio.play();
+});
+
+
+prev_track.addEventListener('click', () => {
+  current_track -= 1;
+  set_track();
+
+  var audio = document.getElementById('audio');
+
+  audio.play(); //call this to play the song right away
+
+});
+
+
+next_track.addEventListener('click', () => {
+  current_track += 1;
+  set_track();
+
+  var audio = document.getElementById('audio');
+
+ audio.play(); //call this to play the song right away
+
+});
+
+
+    </script>
+  </body>
+</html>
